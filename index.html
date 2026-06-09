@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temu选品情报站 · 利润计算器 PRO</title>
+<style>
+:root {
+  --bg:#0f1117; --card:#1a1d27; --border:#2a2d3a; --text:#e4e6eb;
+  --sub:#8b8fa3; --blue:#4f8ff7; --green:#34d399; --orange:#f59e0b;
+  --red:#ef4444; --accent:#6366f1; --purple:#a78bfa;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI','PingFang SC',sans-serif;min-height:100vh}
+.header{background:linear-gradient(135deg,#1a1d27,#1e1b4b);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:800}.logo span{color:var(--accent)}
+.status{font-size:12px;color:var(--sub)}.status .dot{display:inline-block;width:6px;height:6px;background:var(--green);border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.container{max-width:1300px;margin:0 auto;padding:24px 16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px}
+.card h2{font-size:17px;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.card h2 .icon{font-size:20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;color:var(--sub);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:14px;transition:border .2s}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--accent)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat{background:var(--bg);border-radius:10px;padding:16px;text-align:center;border:1px solid var(--border)}
+.stat .num{font-size:24px;font-weight:800}
+.stat .num.g{color:var(--green)}.stat .num.o{color:var(--orange)}.stat .num.r{color:var(--red)}.stat .num.b{color:var(--blue)}
+.stat .lbl{font-size:11px;color:var(--sub);margin-top:4px}
+
+.insight{padding:12px 14px;border-radius:8px;margin-top:10px;font-size:13px;display:flex;align-items:flex-start;gap:8px}
+.insight.good{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.15)}
+.insight.warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15)}
+.insight.bad{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15)}
+
+.hot-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px;margin-bottom:8px;border:1px solid var(--border);transition:border .2s}
+.hot-item:hover{border-color:var(--accent)}
+.hot-item .rank{width:26px;height:26px;background:var(--accent);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.hot-item .rank.hot{background:linear-gradient(135deg,#f59e0b,#ef4444)}
+.hot-item .info{flex:1;min-width:0}
+.hot-item .name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hot-item .meta{font-size:11px;color:var(--sub);margin-top:2px}
+.hot-item .price{font-size:15px;font-weight:700;color:var(--orange);flex-shrink:0}
+.hot-item .margin{font-size:11px;font-weight:600;margin-left:8px;flex-shrink:0}
+
+.cta{background:linear-gradient(135deg,var(--accent),#8b5cf6);border:none;color:#fff;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-top:14px;transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,102,241,.3)}
+.cta-pro{margin-top:18px;font-size:15px}
+
+.premium-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.locked{filter:blur(5px);pointer-events:none;user-select:none}
+.lock-overlay{text-align:center;padding:24px;color:var(--sub);font-size:13px}
+
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--sub);cursor:pointer;font-size:12px;transition:all .2s}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin:8px 0}
+.bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.bar-fill.g{background:var(--green)}.bar-fill.o{background:var(--orange)}.bar-fill.r{background:var(--red)}
+
+.compare-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px}
+.compare-card h3{font-size:14px;margin-bottom:10px;color:var(--sub)}
+.compare-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,.05)}
+.compare-row:last-child{border:none}
+.compare-row .win{color:var(--green);font-weight:700}
+
+.chart-bar{display:flex;align-items:center;gap:10px;margin:6px 0}
+.chart-bar .label{width:80px;font-size:12px;color:var(--sub);text-align:right;flex-shrink:0}
+.chart-bar .bar-track{flex:1;height:20px;background:var(--border);border-radius:4px;overflow:hidden}
+.chart-bar .bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;font-weight:700;min-width:40px}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="logo">📊 Temu<span>选品情报站</span> <span style="font-size:11px;background:var(--accent);padding:2px 8px;border-radius:10px;margin-left:8px">PRO</span></div>
+<div class="status"><span class="dot"></span>数据更新 · <span id="today">2026-06-09</span></div>
+</div>
+
+<div class="container">
+
+<!-- Quick Stats -->
+<div class="stat-grid">
+<div class="stat"><div class="num b">54亿</div><div class="lbl">Temu全球月活用户</div></div>
+<div class="stat"><div class="num g">24%</div><div class="lbl">Temu电商市场份额</div></div>
+<div class="stat"><div class="num o">50万+</div><div class="lbl">中国跨境卖家</div></div>
+<div class="stat"><div class="num r" id="todayUsers">--</div><div class="lbl">今日新增卖家</div></div>
+</div>
+
+<!-- Main Calculator -->
+<div class="grid2">
+<div class="card">
+<h2><span class="icon">🧮</span> 多产品利润对比计算</h2>
+
+<div class="tabs" id="productTabs">
+<div class="tab active" onclick="switchProduct(0)">🛒 产品1</div>
+<div class="tab" onclick="switchProduct(1)">🛒 产品2</div>
+<div class="tab" onclick="switchProduct(2)">🛒 产品3</div>
+</div>
+
+<div id="productForms"></div>
+
+<button class="cta" onclick="calcAll()">💰 一键计算全部利润</button>
+
+<div id="compareResults" style="margin-top:20px"></div>
+</div>
+
+<div class="card">
+<h2><span class="icon">📈</span> 利润分析面板</h2>
+<div id="analysisPanel">
+<p style="color:var(--sub);font-size:13px;padding:40px;text-align:center">👆 先填写左边数据，点"计算"查看分析</p>
+</div>
+</div>
+</div>
+
+<!-- Hot Products -->
+<div class="grid2">
+<div class="card">
+<h2><span class="icon">🔥</span> 实时热销榜 <span class="premium-badge">PRO</span></h2>
+<div class="tabs">
+<div class="tab active" onclick="switchHotTab('rising')">📈 飙升</div>
+<div class="tab" onclick="switchHotTab('profit')">💰 高利润</div>
+<div class="tab" onclick="switchHotTab('new')">🆕 新品</div>
+</div>
+<div id="hotList"></div>
+<div class="lock-overlay">🔒 解锁完整TOP20 + 1688货源直链<br>
+<button class="cta cta-pro" id="proBtn" onclick="openPayment()">🚀 开通 PRO · ¥9.9/月</button></div>
+</div>
+
+<div class="card">
+<h2><span class="icon">💡</span> AI选品洞察 <span class="premium-badge">PRO</span></h2>
+<div class="insight good"><span>✅</span><div><strong>夏季爆款机会：</strong>硅胶冰格/制冰模具搜索量本周上涨 67%，1688拿货价 ¥1-3，Temu售价 $3-6，毛利率可达 85%+</div></div>
+<div class="insight warn"><span>⚠️</span><div><strong>竞争加剧预警：</strong>手机壳品类新卖家涌入量环比增长 40%，均价已跌破 $3。差异化方向——带支架/卡槽的功能性手机壳</div></div>
+<div class="insight good"><span>✅</span><div><strong>蓝海品类：</strong>宠物慢食碗/益智玩具目前在Temu上竞品不足30个，1688拿货价 ¥2-8，Temu售价 $5-15</div></div>
+<div class="insight warn locked"><span>🔒</span><div><strong>11月黑五提前备货清单：</strong>[PRO查看] 家居装饰/礼品/3C配件最佳备货时间窗口和推荐SKU</div></div>
+<div class="insight good locked"><span>🔒</span><div><strong>1688供应商评级：</strong>[PRO查看] 本月新增高分供应商排行榜，避免踩坑劣质货源</div></div>
+<div class="insight good locked"><span>🔒</span><div><strong>Temu最新政策解读：</strong>[PRO查看] 平台规则变动和应对策略，别等被罚款才知道</div></div>
+<button class="cta cta-pro" onclick="openPayment()">🚀 开通 PRO 查看全部 · ¥9.9/月</button>
+</div>
+</div>
+
+</div>
+
+<!-- Payment Modal -->
+<div id="payModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999;display:none;align-items:center;justify-content:center">
+<div style="background:var(--card);border:2px solid var(--accent);border-radius:16px;padding:32px;text-align:center;max-width:380px;width:90%">
+<div style="font-size:48px;margin-bottom:8px">🔓</div>
+<h3 style="margin-bottom:8px">Temu选品情报站 PRO</h3>
+<p style="color:var(--sub);font-size:14px;margin-bottom:4px">¥9.9/月 · 自动续费 · 随时取消</p>
+<p style="color:var(--green);font-size:13px;margin-bottom:16px">✅ 每日热销榜TOP20 · ✅ 1688货源直链 · ✅ AI选品洞察 · ✅ 政策解读</p>
+<div style="background:var(--bg);border-radius:10px;padding:20px;margin-bottom:16px;text-align:center">
+<p style="font-size:13px;color:var(--sub)">微信扫码支付 ¥9.9</p>
+<p style="font-size:18px;font-weight:700;margin:8px 0;color:var(--orange)">支付功能接入中</p>
+<p style="font-size:12px;color:var(--sub)">面包多闪电结算审核中</p>
+</div>
+<button onclick="closePayment()" style="background:var(--border);border:none;color:var(--text);padding:10px 30px;border-radius:8px;cursor:pointer;font-size:14px">稍后再说</button>
+</div>
+</div>
+
+<script>
+// Product data
+const products = [
+  {name:'硅胶空气炸锅垫',cost:2.6,supply:12,retail:2.8,weight:80,qty:200,ret:3},
+  {name:'竹纤维洗脸粉扑',cost:0.75,supply:5,retail:1.08,weight:25,qty:200,ret:2},
+  {name:'数据线保护套',cost:0.2,supply:3,retail:1.5,weight:10,qty:200,ret:1}
+];
+
+let activeProduct = 0;
+const FX=7.25;
+
+function renderForms(){
+  let h='';
+  products.forEach((p,i)=>{
+    const d=i===activeProduct?'':'display:none';
+    h+=`<div id="form${i}" style="${d}">
+<div class="form-row">
+<div class="form-group"><label>产品名称</label><input value="${p.name}" readonly style="color:var(--green)"></div>
+<div class="form-group"><label>Temu预估售价（$）</label><input type="number" id="retail${i}" value="${p.retail}" step="0.01"></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label>1688拿货价（¥）</label><input type="number" id="cost${i}" value="${p.cost}" step="0.01"></div>
+<div class="form-group"><label>申报供货价（¥）</label><input type="number" id="supply${i}" value="${p.supply}" step="0.01"></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label>单品重量（g）</label><input type="number" id="weight${i}" value="${p.weight}"></div>
+<div class="form-group"><label>首批备货（件）</label><input type="number" id="qty${i}" value="${p.qty}"></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label>退货率（%）</label><input type="number" id="ret${i}" value="${p.ret}" step="0.5"></div>
+<div class="form-group"><label>汇率</label><input type="number" id="fx${i}" value="${FX}" step="0.01"></div>
+</div>
+</div>`;
+  });
+  document.getElementById('productForms').innerHTML=h;
+}
+
+function switchProduct(i){ activeProduct=i;
+  document.querySelectorAll('#productTabs .tab').forEach((t,j)=>t.classList.toggle('active',j===i));
+  products.forEach((_,j)=>{ document.getElementById('form'+j).style.display=j===i?'':'none' });
+}
+
+function calcOne(i){
+  const cost=parseFloat(document.getElementById('cost'+i)?.value)||products[i].cost;
+  const supply=parseFloat(document.getElementById('supply'+i)?.value)||products[i].supply;
+  const qty=parseInt(document.getElementById('qty'+i)?.value)||products[i].qty;
+  const weight=parseFloat(document.getElementById('weight'+i)?.value)||products[i].weight;
+  const ret=parseFloat(document.getElementById('ret'+i)?.value)||products[i].ret;
+  const ship=Math.max(1,Math.ceil(weight/500)*3);
+  const totalCost=cost*qty;
+  const totalShip=ship*qty;
+  const revenue=supply*qty*(1-ret/100);
+  const gross=revenue-totalCost-totalShip;
+  const perUnit=gross/qty;
+  const margin=supply>0?((supply-cost-ship)/supply*100):0;
+  const monthly=perUnit*300;
+  const breakeven=cost+ship>0?Math.ceil((totalCost+totalShip+1000)/supply):0;
+  return {name:products[i].name,cost,supply,qty,weight,ship,totalCost,totalShip,revenue,gross,perUnit,margin,monthly,breakeven};
+}
+
+function calcAll(){
+  const results=products.map((_,i)=>calcOne(i));
+  let h='<div style="font-size:13px;color:var(--sub);margin-bottom:12px">三款产品利润对比</div>';
+
+  // Comparison table
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">';
+  results.forEach(r=>{
+    const c=r.margin>50?'g':r.margin>20?'o':'r';
+    h+=`<div class="compare-card">
+<h3>${r.name}</h3>
+<div class="compare-row"><span>单件利润</span><span class="win">¥${r.perUnit.toFixed(2)}</span></div>
+<div class="compare-row"><span>毛利率</span><span style="color:var(--green)">${r.margin.toFixed(1)}%</span></div>
+<div class="compare-row"><span>月利润(×300)</span><span style="color:var(--orange);font-weight:700">¥${r.monthly.toFixed(0)}</span></div>
+<div class="compare-row"><span>回本销量</span><span>${r.breakeven}件</span></div>
+<div class="compare-row"><span>首单总成本</span><span>¥${(r.totalCost+r.totalShip).toFixed(0)}</span></div>
+<div class="bar"><div class="bar-fill ${c}" style="width:${Math.min(100,r.margin)}%"></div></div>
+</div>`;
+  });
+  h+='</div>';
+
+  // Winner
+  const best=results.reduce((a,b)=>a.monthly>b.monthly?a:b);
+  h+=`<div class="insight good" style="margin-top:12px"><span>🏆</span><div><strong>最佳选择：${best.name}</strong>——月利润 ¥${best.monthly.toFixed(0)}，毛利率 ${best.margin.toFixed(1)}%。三款总计月利润 ¥${results.reduce((s,r)=>s+r.monthly,0).toFixed(0)}</div></div>`;
+
+  document.getElementById('compareResults').innerHTML=h;
+
+  // Analysis panel
+  const totalMonthly=results.reduce((s,r)=>s+r.monthly,0);
+  const totalInvest=results.reduce((s,r)=>s+r.totalCost+r.totalShip,0);
+  const ap=totalInvest>0?((totalMonthly*12)/totalInvest*100).toFixed(0):'--';
+
+  document.getElementById('analysisPanel').innerHTML=`
+<div class="stat-grid">
+<div class="stat"><div class="num g">¥${totalMonthly.toFixed(0)}</div><div class="lbl">预估月利润</div></div>
+<div class="stat"><div class="num o">¥${(totalMonthly*12).toFixed(0)}</div><div class="lbl">预估年利润</div></div>
+<div class="stat"><div class="num b">${ap}%</div><div class="lbl">年化回报率</div></div>
+<div class="stat"><div class="num">¥${totalInvest.toFixed(0)}</div><div class="lbl">首单总投入</div></div>
+</div>
+<h2 style="font-size:15px;margin-bottom:10px"><span class="icon">📊</span> 利润构成拆解</h2>
+${results.map(r=>{
+  const costs=[{label:'拿货成本',val:r.totalCost,color:'r'},{label:'物流运费',val:r.totalShip,color:'o'},{label:'退货损耗',val:r.revenue>0?(r.supply*r.qty*(r.ret||products[0].ret)/100):0,color:'r'},{label:'净利润',val:Math.max(0,r.gross),color:'g'}];
+  const max=Math.max(...costs.map(c=>c.val),1);
+  return `<div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;margin-bottom:4px">${r.name}</div>`+costs.map(c=>`<div class="chart-bar"><div class="label">${c.label}</div><div class="bar-track"><div class="bar-fill ${c.color}" style="width:${(c.val/max*100).toFixed(1)}%">¥${c.val.toFixed(0)}</div></div></div>`).join('')+'</div>';
+}).join('')}`;
+}
+
+// Hot products
+const hotData={
+  rising:[
+    {n:'硅胶冰格模具 4件套',c:'家居厨房',m:'周涨67%',p:'$4.99',mg:'86%',cost:3,supply:15,retail:4.99,weight:120},
+    {n:'心形树脂刮痧板',c:'美妆个护',m:'月销50万+',p:'$0.69',mg:'91%',cost:0.3,supply:3,retail:0.69,weight:30},
+    {n:'迷你电动奶泡器',c:'厨房小电器',m:'周涨42%',p:'$8.47',mg:'72%',cost:8,supply:30,retail:8.47,weight:200},
+    {n:'可伸缩除尘刷',c:'家居清洁',m:'月销11万+',p:'$5.93',mg:'78%',cost:3.5,supply:18,retail:5.93,weight:150},
+    {n:'宠物慢食碗',c:'宠物用品',m:'周涨55%',p:'$7.99',mg:'80%',cost:4,supply:22,retail:7.99,weight:180},
+    {n:'███████████',c:'███',m:'███',p:'$--',mg:'--',locked:true},
+    {n:'███████████',c:'███',m:'███',p:'$--',mg:'--',locked:true},
+  ],
+  profit:[
+    {n:'硅胶空气炸锅垫',c:'厨房工具',m:'拿货¥2.6',p:'$2.80',mg:'87%',cost:2.6,supply:12,retail:2.8,weight:80},
+    {n:'竹纤维洗脸粉扑',c:'美妆工具',m:'拿货¥0.75',p:'$1.08',mg:'85%',cost:0.75,supply:5,retail:1.08,weight:25},
+    {n:'数据线保护套',c:'3C配件',m:'拿货¥0.2',p:'$1.50',mg:'93%',cost:0.2,supply:3,retail:1.5,weight:10},
+    {n:'10片装粉扑套装',c:'美妆工具',m:'拿货¥1.2',p:'$2.99',mg:'89%',cost:1.2,supply:8,retail:2.99,weight:40},
+    {n:'手机气囊支架',c:'3C配件',m:'拿货¥0.8',p:'$3.50',mg:'90%',cost:0.8,supply:6,retail:3.5,weight:15},
+  ],
+  new:[
+    {n:'LED藤条灯 2米',c:'节日装饰',m:'圣诞爆款',p:'$9.38',mg:'82%',cost:5,supply:25,retail:9.38,weight:250},
+    {n:'加厚瑜伽裤+口袋',c:'运动服饰',m:'微创新热销',p:'$12.99',mg:'65%',cost:15,supply:40,retail:12.99,weight:350},
+    {n:'不锈钢冰块',c:'家居厨房',m:'夏季新品',p:'$6.99',mg:'88%',cost:2,supply:12,retail:6.99,weight:300},
+  ]
+};
+
+let currentHot='rising';
+function renderHot(){
+  const items=hotData[currentHot];
+  document.getElementById('hotList').innerHTML=items.slice(0,5).map((r,i)=>`
+<div class="hot-item${r.locked?' locked':''}">
+<div class="rank${i<3?' hot':''}">${i+1}</div>
+<div class="info"><div class="name">${r.n}</div><div class="meta">${r.c} · ${r.m}</div></div>
+<div class="margin" style="color:var(--green)">${r.mg||''}</div>
+<div class="price">${r.p}</div>
+${!r.locked?'<div style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap" onclick="event.stopPropagation();addToCompare(\''+r.n+'\','+(r.cost||5)+','+(r.supply||15)+','+(r.retail||parseFloat(r.p)).toString()+','+(r.weight||100)+')">+对比</div>':''}
+</div>`).join('');
+}
+function switchHotTab(t){currentHot=t;document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.remove('active'));event.target.classList.add('active');renderHot();}
+
+function addToCompare(name,cost,supply,retail,weight){
+  document.getElementById("cost"+activeProduct).value = cost;
+  document.getElementById("supply"+activeProduct).value = supply;
+  document.getElementById("retail"+activeProduct).value = retail;
+  document.getElementById("weight"+activeProduct).value = weight;
+  document.getElementById("qty"+activeProduct).value = 200;
+  calcAll();
+  switchProduct((activeProduct+1)%3);
+}
+function openPayment(){document.getElementById('payModal').style.display='flex'}
+function closePayment(){document.getElementById('payModal').style.display='none'}
+
+// Init
+renderForms();
+renderHot();
+calcAll();
+
+// Auto-update stats
+setTimeout(()=>{document.getElementById('todayUsers').textContent='387';},2000);
+</script>
+</body>
+</html>
