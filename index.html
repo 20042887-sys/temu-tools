@@ -275,25 +275,25 @@ ${results.map(r=>{
 // Hot products
 const hotData={
   rising:[
-    {n:'硅胶冰格模具 4件套',c:'家居厨房',m:'周涨67%',p:'$4.99',mg:'86%'},
-    {n:'心形树脂刮痧板',c:'美妆个护',m:'月销50万+',p:'$0.69',mg:'91%'},
-    {n:'迷你电动奶泡器',c:'厨房小电器',m:'周涨42%',p:'$8.47',mg:'72%'},
-    {n:'可伸缩除尘刷',c:'家居清洁',m:'月销11万+',p:'$5.93',mg:'78%'},
-    {n:'宠物慢食碗',c:'宠物用品',m:'周涨55%',p:'$7.99',mg:'80%'},
+    {n:'硅胶冰格模具 4件套',c:'家居厨房',m:'周涨67%',p:'$4.99',mg:'86%',cost:3,supply:15,retail:4.99,weight:120},
+    {n:'心形树脂刮痧板',c:'美妆个护',m:'月销50万+',p:'$0.69',mg:'91%',cost:0.3,supply:3,retail:0.69,weight:30},
+    {n:'迷你电动奶泡器',c:'厨房小电器',m:'周涨42%',p:'$8.47',mg:'72%',cost:8,supply:30,retail:8.47,weight:200},
+    {n:'可伸缩除尘刷',c:'家居清洁',m:'月销11万+',p:'$5.93',mg:'78%',cost:3.5,supply:18,retail:5.93,weight:150},
+    {n:'宠物慢食碗',c:'宠物用品',m:'周涨55%',p:'$7.99',mg:'80%',cost:4,supply:22,retail:7.99,weight:180},
     {n:'███████████',c:'███',m:'███',p:'$--',mg:'--',locked:true},
     {n:'███████████',c:'███',m:'███',p:'$--',mg:'--',locked:true},
   ],
   profit:[
-    {n:'硅胶空气炸锅垫',c:'厨房工具',m:'拿货¥2.6',p:'$2.80',mg:'87%'},
-    {n:'竹纤维洗脸粉扑',c:'美妆工具',m:'拿货¥0.75',p:'$1.08',mg:'85%'},
-    {n:'数据线保护套',c:'3C配件',m:'拿货¥0.2',p:'$1.50',mg:'93%'},
-    {n:'10片装粉扑套装',c:'美妆工具',m:'拿货¥1.2',p:'$2.99',mg:'89%'},
-    {n:'手机气囊支架',c:'3C配件',m:'拿货¥0.8',p:'$3.50',mg:'90%'},
+    {n:'硅胶空气炸锅垫',c:'厨房工具',m:'拿货¥2.6',p:'$2.80',mg:'87%',cost:2.6,supply:12,retail:2.8,weight:80},
+    {n:'竹纤维洗脸粉扑',c:'美妆工具',m:'拿货¥0.75',p:'$1.08',mg:'85%',cost:0.75,supply:5,retail:1.08,weight:25},
+    {n:'数据线保护套',c:'3C配件',m:'拿货¥0.2',p:'$1.50',mg:'93%',cost:0.2,supply:3,retail:1.5,weight:10},
+    {n:'10片装粉扑套装',c:'美妆工具',m:'拿货¥1.2',p:'$2.99',mg:'89%',cost:1.2,supply:8,retail:2.99,weight:40},
+    {n:'手机气囊支架',c:'3C配件',m:'拿货¥0.8',p:'$3.50',mg:'90%',cost:0.8,supply:6,retail:3.5,weight:15},
   ],
   new:[
-    {n:'LED藤条灯 2米',c:'节日装饰',m:'圣诞爆款',p:'$9.38',mg:'82%'},
-    {n:'加厚瑜伽裤+口袋',c:'运动服饰',m:'微创新热销',p:'$12.99',mg:'65%'},
-    {n:'不锈钢冰块',c:'家居厨房',m:'夏季新品',p:'$6.99',mg:'88%'},
+    {n:'LED藤条灯 2米',c:'节日装饰',m:'圣诞爆款',p:'$9.38',mg:'82%',cost:5,supply:25,retail:9.38,weight:250},
+    {n:'加厚瑜伽裤+口袋',c:'运动服饰',m:'微创新热销',p:'$12.99',mg:'65%',cost:15,supply:40,retail:12.99,weight:350},
+    {n:'不锈钢冰块',c:'家居厨房',m:'夏季新品',p:'$6.99',mg:'88%',cost:2,supply:12,retail:6.99,weight:300},
   ]
 };
 
@@ -306,10 +306,20 @@ function renderHot(){
 <div class="info"><div class="name">${r.n}</div><div class="meta">${r.c} · ${r.m}</div></div>
 <div class="margin" style="color:var(--green)">${r.mg||''}</div>
 <div class="price">${r.p}</div>
+${!r.locked?'<div style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap" onclick="event.stopPropagation();addToCompare(\''+r.n+'\','+(r.cost||5)+','+(r.supply||15)+','+(r.retail||parseFloat(r.p)).toString()+','+(r.weight||100)+')">+对比</div>':''}
 </div>`).join('');
 }
 function switchHotTab(t){currentHot=t;document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.remove('active'));event.target.classList.add('active');renderHot();}
 
+function addToCompare(name,cost,supply,retail,weight){
+  document.getElementById("cost"+activeProduct).value = cost;
+  document.getElementById("supply"+activeProduct).value = supply;
+  document.getElementById("retail"+activeProduct).value = retail;
+  document.getElementById("weight"+activeProduct).value = weight;
+  document.getElementById("qty"+activeProduct).value = 200;
+  calcAll();
+  switchProduct((activeProduct+1)%3);
+}
 function openPayment(){document.getElementById('payModal').style.display='flex'}
 function closePayment(){document.getElementById('payModal').style.display='none'}
 
