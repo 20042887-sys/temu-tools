@@ -306,34 +306,41 @@ function renderHot(){
 <div class="info"><div class="name">${r.n}</div><div class="meta">${r.c} · ${r.m}</div></div>
 <div class="margin" style="color:var(--green)">${r.mg||''}</div>
 <div class="price">${r.p}</div>
-${!r.locked?'<div style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap" onclick="event.stopPropagation();addToCompare(\''+r.n+'\','+(r.cost||5)+','+(r.supply||15)+','+(r.retail||parseFloat(r.p)).toString()+','+(r.weight||100)+')">+对比</div>':''}
+${r.locked ? '' : '<div class="add-btn" data-name="'+r.n+'" data-cost="'+r.cost+'" data-supply="'+r.supply+'" data-retail="'+r.retail+'" data-weight="'+r.weight+'" style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap">+对比</div>'}
 </div>`).join('');
 }
+
+// Click delegation for +对比 buttons (use document since hotList gets re-rendered)
+document.addEventListener('click', function(e){
+  var btn = e.target.closest('.add-btn');
+  if(!btn) return;
+  e.stopPropagation();
+  var name = btn.dataset.name;
+  var cost = parseFloat(btn.dataset.cost);
+  var supply = parseFloat(btn.dataset.supply);
+  var retail = parseFloat(btn.dataset.retail);
+  var weight = parseInt(btn.dataset.weight);
+  addToCompare(name, cost, supply, retail, weight);
+});
 function switchHotTab(t){currentHot=t;document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.remove('active'));event.target.classList.add('active');renderHot();}
 
 function addToCompare(name,cost,supply,retail,weight){
   var pid = activeProduct;
   var elCost = document.getElementById("cost"+pid);
-  var elSupply = document.getElementById("supply"+pid);
-  var elRetail = document.getElementById("retail"+pid);
-  var elWeight = document.getElementById("weight"+pid);
-  var elQty = document.getElementById("qty"+pid);
-  if(!elCost){ alert("计算器未加载，请刷新页面"); return; }
+  if(!elCost){ alert("请先填写产品数据"); return; }
   elCost.value = cost;
-  elSupply.value = supply;
-  elRetail.value = retail;
-  elWeight.value = weight;
-  elQty.value = 200;
-  // Update product name display
-  var nameInputs = document.querySelectorAll('#form'+pid+' input[readonly]');
-  if(nameInputs.length>0){ nameInputs[0].value = name; nameInputs[0].style.color = 'var(--orange)'; }
-  // Highlight the tab
-  document.querySelectorAll('#productTabs .tab')[pid].style.background = 'var(--green)';
-  document.querySelectorAll('#productTabs .tab')[pid].style.color = '#fff';
+  document.getElementById("supply"+pid).value = supply;
+  document.getElementById("retail"+pid).value = retail;
+  document.getElementById("weight"+pid).value = weight;
+  document.getElementById("qty"+pid).value = 200;
+  // Update tab label
+  var tabs = document.querySelectorAll('#productTabs .tab');
+  if(tabs[pid]){ tabs[pid].textContent = '\u{1F4CA} '+name; tabs[pid].style.color = 'var(--orange)'; }
+  // Calculate
+  products[pid].name = name; products[pid].cost = cost; products[pid].supply = supply;
   calcAll();
-  // Flash notification
+  // Green flash
   var el = document.getElementById('compareResults');
-  el.style.transition = '0.15s';
   el.style.border = '2px solid var(--green)';
   setTimeout(function(){ el.style.border = '1px solid var(--border)'; }, 1500);
 }
