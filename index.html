@@ -125,6 +125,10 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <!-- Hot Products -->
 <div class="grid2">
 <div class="card">
+<h2><span class="icon">⭐</span> 我的选品库 <span style="font-size:11px;color:var(--sub)">（自动保存，下次打开还在）</span></h2>
+<div id="savedList" style="min-height:60px"></div>
+</div>
+<div class="card">
 <h2><span class="icon">🔥</span> 实时热销榜 <span class="premium-badge">PRO</span></h2>
 <div class="tabs hot-tabs">
 <div class="tab" onclick="switchHotTab('profit')">💰 高利润</div>
@@ -342,6 +346,32 @@ function addToCompare(name,cost,supply,retail,weight){
   products[pid].retail = retail;
   products[pid].weight = weight;
   calcAll();
+  // Save to library
+  saveToLibrary(name,cost,supply,retail,weight);
+}
+function saveToLibrary(name,cost,supply,retail,weight){
+  var lib=JSON.parse(localStorage.getItem('zhanc_library')||'[]');
+  var exists=lib.find(function(p){return p.name===name});
+  if(!exists){lib.push({name:name,cost:cost,supply:supply,retail:retail,weight:weight,savedAt:new Date().toLocaleDateString()})}
+  if(lib.length>20)lib=lib.slice(-20);
+  localStorage.setItem('zhanc_library',JSON.stringify(lib));
+  renderSaved();
+}
+function renderSaved(){
+  var lib=JSON.parse(localStorage.getItem('zhanc_library')||'[]');
+  var el=document.getElementById('savedList');
+  if(lib.length===0){el.innerHTML='<p style="color:var(--sub);font-size:13px;text-align:center;padding:20px">📭 还没有产品，点击热销榜的"+对比"即可收藏</p>';return;}
+  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px">'+lib.map(function(p,i){
+    var ship=Math.max(1,Math.ceil((p.weight*200)/3000)*5/200);
+    var mg=p.supply>0?((p.supply-p.cost-ship)/p.supply*100).toFixed(0):0;
+    return '<div style="background:var(--bg);border-radius:8px;padding:10px;border:1px solid var(--border);cursor:pointer" onclick="addToCompare(\''+p.name+'\','+p.cost+','+p.supply+','+p.retail+','+p.weight+')" title="点击加载到计算器"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px">'+p.name+'</span><span style="color:var(--green);font-size:12px;font-weight:700">'+mg+'%</span></div><div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--sub)"><span>¥'+p.cost+' → ¥'+p.supply+'</span><span onclick="event.stopPropagation();removeSaved('+i+')" style="color:var(--red);cursor:pointer" title="删除">✕</span></div></div>';
+  }).join('')+'</div>';
+}
+function removeSaved(i){
+  var lib=JSON.parse(localStorage.getItem('zhanc_library')||'[]');
+  lib.splice(i,1);
+  localStorage.setItem('zhanc_library',JSON.stringify(lib));
+  renderSaved();
 }
 function openPayment(){document.getElementById('payModal').style.display='flex'}
 function closePayment(){document.getElementById('payModal').style.display='none'}
@@ -349,6 +379,7 @@ function closePayment(){document.getElementById('payModal').style.display='none'
 // Init
 renderForms();
 renderHot();
+renderSaved();
 calcAll();
 
 // Auto-update stats
