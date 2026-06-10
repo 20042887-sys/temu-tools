@@ -325,25 +325,22 @@ document.addEventListener('click', function(e){
 function switchHotTab(t){currentHot=t;document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.remove('active'));event.target.classList.add('active');renderHot();}
 
 function addToCompare(name,cost,supply,retail,weight){
-  alert("收到点击！产品="+name+" 成本="+cost+" 售价="+retail);
   var pid = activeProduct;
-  var elCost = document.getElementById("cost"+pid);
-  if(!elCost){ alert("请先填写产品数据"); return; }
-  elCost.value = cost;
+  document.getElementById("cost"+pid).value = cost;
   document.getElementById("supply"+pid).value = supply;
   document.getElementById("retail"+pid).value = retail;
   document.getElementById("weight"+pid).value = weight;
   document.getElementById("qty"+pid).value = 200;
-  // Update tab label
-  var tabs = document.querySelectorAll('#productTabs .tab');
-  if(tabs[pid]){ tabs[pid].textContent = '📊 '+name; tabs[pid].style.color = 'var(--orange)'; }
-  // Calculate
-  products[pid].name = name; products[pid].cost = cost; products[pid].supply = supply;
+  // Also update the display name in the form
+  var nameField = document.querySelector('#form'+pid+' input');
+  if(nameField) nameField.value = name;
+  // Update product data
+  products[pid].name = name;
+  products[pid].cost = cost;
+  products[pid].supply = supply;
+  products[pid].retail = retail;
+  products[pid].weight = weight;
   calcAll();
-  // Green flash
-  var el = document.getElementById('compareResults');
-  el.style.border = '2px solid var(--green)';
-  setTimeout(function(){ el.style.border = '1px solid var(--border)'; }, 1500);
 }
 function openPayment(){document.getElementById('payModal').style.display='flex'}
 function closePayment(){document.getElementById('payModal').style.display='none'}
