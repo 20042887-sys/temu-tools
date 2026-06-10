@@ -122,12 +122,17 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 </div>
 </div>
 
+<!-- Saved Library -->
+<div class="card" style="margin-bottom:20px;padding:16px 24px">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+<h2 style="margin:0;font-size:15px"><span class="icon">⭐</span> 我的选品库</h2>
+<span style="font-size:11px;color:var(--sub)">点击热销榜"+对比"自动收藏 · 数据保存在浏览器</span>
+</div>
+<div id="savedList" style="min-height:32px"></div>
+</div>
+
 <!-- Hot Products -->
 <div class="grid2">
-<div class="card">
-<h2><span class="icon">⭐</span> 我的选品库 <span style="font-size:11px;color:var(--sub)">（自动保存，下次打开还在）</span></h2>
-<div id="savedList" style="min-height:60px"></div>
-</div>
 <div class="card">
 <h2><span class="icon">🔥</span> 实时热销榜 <span class="premium-badge">PRO</span></h2>
 <div class="tabs hot-tabs">
@@ -360,11 +365,11 @@ function saveToLibrary(name,cost,supply,retail,weight){
 function renderSaved(){
   var lib=JSON.parse(localStorage.getItem('zhanc_library')||'[]');
   var el=document.getElementById('savedList');
-  if(lib.length===0){el.innerHTML='<p style="color:var(--sub);font-size:13px;text-align:center;padding:20px">📭 还没有产品，点击热销榜的"+对比"即可收藏</p>';return;}
-  el.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px">'+lib.map(function(p,i){
+  if(lib.length===0){el.innerHTML='<p style="color:var(--sub);font-size:12px;margin:0">📭 还没有收藏品，点击热销榜的 "+对比" 即可加入选品库</p>';return;}
+  el.innerHTML='<div style="display:flex;flex-wrap:wrap;gap:8px">'+lib.map(function(p,i){
     var ship=Math.max(1,Math.ceil((p.weight*200)/3000)*5/200);
     var mg=p.supply>0?((p.supply-p.cost-ship)/p.supply*100).toFixed(0):0;
-    return '<div style="background:var(--bg);border-radius:8px;padding:10px;border:1px solid var(--border);cursor:pointer" onclick="addToCompare(\''+p.name+'\','+p.cost+','+p.supply+','+p.retail+','+p.weight+')" title="点击加载到计算器"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px">'+p.name+'</span><span style="color:var(--green);font-size:12px;font-weight:700">'+mg+'%</span></div><div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--sub)"><span>¥'+p.cost+' → ¥'+p.supply+'</span><span onclick="event.stopPropagation();removeSaved('+i+')" style="color:var(--red);cursor:pointer" title="删除">✕</span></div></div>';
+    return '<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:12px;white-space:nowrap;display:flex;align-items:center;gap:8px;transition:border .2s" onclick="addToCompare(\''+p.name+'\','+p.cost+','+p.supply+','+p.retail+','+p.weight+')" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'" title="点击加载到计算器"><b>'+p.name+'</b> <span style="color:var(--sub)">¥'+p.cost+'→¥'+p.supply+'</span> <span style="color:var(--green);font-weight:700">'+mg+'%</span> <span onclick="event.stopPropagation();removeSaved('+i+')" style="color:var(--red);cursor:pointer;font-size:14px">×</span></div>';
   }).join('')+'</div>';
 }
 function removeSaved(i){
