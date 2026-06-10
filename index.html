@@ -126,8 +126,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <div class="grid2">
 <div class="card">
 <h2><span class="icon">🔥</span> 实时热销榜 <span class="premium-badge">PRO</span></h2>
-<div class="tabs">
-<div class="tab active" onclick="switchHotTab('rising')">📈 飙升</div>
+<div class="tabs hot-tabs">
 <div class="tab" onclick="switchHotTab('profit')">💰 高利润</div>
 <div class="tab" onclick="switchHotTab('new')">🆕 新品</div>
 </div>
@@ -225,7 +224,7 @@ function calcOne(i){
   const margin=supply>0?((supply-cost-ship)/supply*100):0;
   const monthly=perUnit*300;
   const breakeven=cost+ship>0?Math.ceil((totalCost+totalShip+1000)/supply):0;
-  return {name:products[i].name,cost,supply,qty,weight,ship,totalCost,totalShip,revenue,gross,perUnit,margin,monthly,breakeven};
+  return {name:products[i].name,cost,supply,retail:products[i].retail,qty,weight,ship,totalCost,totalShip,revenue,gross,perUnit,margin,monthly,breakeven,ret};
 }
 
 function calcAll(){
@@ -324,7 +323,7 @@ document.addEventListener('click', function(e){
   var weight = parseInt(btn.dataset.weight);
   addToCompare(name, cost, supply, retail, weight);
 });
-function switchHotTab(t){currentHot=t;document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.remove('active'));event.target.classList.add('active');renderHot();}
+function switchHotTab(t){currentHot=t;document.querySelectorAll('.hot-tabs .tab').forEach(el=>el.classList.remove('active'));event.target.classList.add('active');renderHot();}
 
 function addToCompare(name,cost,supply,retail,weight){
   var pid = activeProduct;
