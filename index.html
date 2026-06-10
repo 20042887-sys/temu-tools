@@ -109,55 +109,44 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 
 <!-- Beginner Guide -->
 <div class="card" style="margin-bottom:20px;padding:18px 24px">
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-<h2 style="margin:0;font-size:15px"><span class="icon">🎓</span> Temu小白开店指南</h2>
-<span style="font-size:11px;color:var(--sub)">从零到出单，一步步跟着做</span>
+<h2 style="margin:0 0 14px 0;font-size:15px"><span class="icon">🎓</span> Temu开店实操教程 <span style="font-size:11px;color:var(--sub);font-weight:400">从0到出单，每一步都有详细教程</span></h2>
+<div id="guideSteps">
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg);border-radius:10px;border:1px solid var(--border);margin-bottom:6px">
+<div style="width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">1</div>
+<div style="flex:1"><div style="font-size:13px;font-weight:600">注册Temu卖家账号</div><div style="font-size:11px;color:var(--sub)">身份证/营业执照注册，1-3天审核通过</div></div>
+<div style="font-size:11px;color:var(--green);flex-shrink:0">✅ 免费</div>
 </div>
-<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;text-align:center" id="guideSteps">
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)">
-<div style="font-size:20px;margin-bottom:6px">①</div>
-<div style="font-size:12px;font-weight:700;margin-bottom:4px">注册店铺</div>
-<div style="font-size:10px;color:var(--sub)">身份证/营业执照</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">✅ 免费</div>
-<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg);border-radius:10px;border:1px solid var(--border);margin-bottom:6px">
+<div style="width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">2</div>
+<div style="flex:1"><div style="font-size:13px;font-weight:600">选品调研</div><div style="font-size:11px;color:var(--sub)">用本页热销榜找到高毛利产品，1688比价确认利润</div></div>
+<div style="font-size:11px;color:var(--green);flex-shrink:0">✅ 免费</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
-<div style="font-size:20px;margin-bottom:6px">②</div>
-<div style="font-size:12px;font-weight:700;margin-bottom:4px">选品调研</div>
-<div style="font-size:10px;color:var(--sub)">热销榜+利润计算</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">✅ 本页工具</div>
-<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg);border-radius:10px;border:1px solid var(--border);margin-bottom:6px;position:relative;overflow:hidden">
+<div style="position:absolute;top:0;right:0;background:var(--accent);color:#fff;font-size:9px;padding:2px 8px;border-radius:0 10px 0 8px;font-weight:600">🔒 PRO</div>
+<div style="width:30px;height:30px;border-radius:50%;background:var(--border);color:var(--sub);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">3</div>
+<div style="flex:1"><div style="font-size:13px;font-weight:600">1688进货实战</div><div style="font-size:11px;color:var(--sub)">搜索技巧 · 找源头工厂 · 拿样谈判 · 避坑指南</div></div>
+<div style="font-size:11px;color:var(--accent);cursor:pointer;flex-shrink:0;font-weight:600" onclick="openPayment()">查看教程 →</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
-<div style="font-size:20px;margin-bottom:6px">③</div>
-<div style="font-size:12px;font-weight:700;margin-bottom:4px">1688进货</div>
-<div style="font-size:10px;color:var(--sub)">找供应商+拿样品</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
-<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg);border-radius:10px;border:1px solid var(--border);margin-bottom:6px;position:relative;overflow:hidden">
+<div style="position:absolute;top:0;right:0;background:var(--accent);color:#fff;font-size:9px;padding:2px 8px;border-radius:0 10px 0 8px;font-weight:600">🔒 PRO</div>
+<div style="width:30px;height:30px;border-radius:50%;background:var(--border);color:var(--sub);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">4</div>
+<div style="flex:1"><div style="font-size:13px;font-weight:600">产品上架全流程</div><div style="font-size:11px;color:var(--sub)">英文标题模板 · 产品图拍摄 · 供货价定价公式 · 审核要点</div></div>
+<div style="font-size:11px;color:var(--accent);cursor:pointer;flex-shrink:0;font-weight:600" onclick="openPayment()">查看教程 →</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
-<div style="font-size:20px;margin-bottom:6px">④</div>
-<div style="font-size:12px;font-weight:700;margin-bottom:4px">上架产品</div>
-<div style="font-size:10px;color:var(--sub)">标题+图片+定价</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
-<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg);border-radius:10px;border:1px solid var(--border);margin-bottom:6px;position:relative;overflow:hidden">
+<div style="position:absolute;top:0;right:0;background:var(--accent);color:#fff;font-size:9px;padding:2px 8px;border-radius:0 10px 0 8px;font-weight:600">🔒 PRO</div>
+<div style="width:30px;height:30px;border-radius:50%;background:var(--border);color:var(--sub);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">5</div>
+<div style="flex:1"><div style="font-size:13px;font-weight:600">备货与发货</div><div style="font-size:11px;color:var(--sub)">Temu仓地址 · 条码打印 · 物流选择 · 贴标规范</div></div>
+<div style="font-size:11px;color:var(--accent);cursor:pointer;flex-shrink:0;font-weight:600" onclick="openPayment()">查看教程 →</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
-<div style="font-size:20px;margin-bottom:6px">⑤</div>
-<div style="font-size:12px;font-weight:700;margin-bottom:4px">备货发货</div>
-<div style="font-size:10px;color:var(--sub)">寄Temu仓+贴标</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
-<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
-</div>
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
-<div style="font-size:20px;margin-bottom:6px">⑥</div>
-<div style="font-size:12px;font-weight:700;margin-bottom:4px">放大运营</div>
-<div style="font-size:10px;color:var(--sub)">多品+广告+优化</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
-<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg);border-radius:10px;border:1px solid var(--border);margin-bottom:6px;position:relative;overflow:hidden">
+<div style="position:absolute;top:0;right:0;background:var(--accent);color:#fff;font-size:9px;padding:2px 8px;border-radius:0 10px 0 8px;font-weight:600">🔒 PRO</div>
+<div style="width:30px;height:30px;border-radius:50%;background:var(--border);color:var(--sub);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">6</div>
+<div style="flex:1"><div style="font-size:13px;font-weight:600">放大运营</div><div style="font-size:11px;color:var(--sub)">多SKU矩阵 · 广告ROI · 旺季备货 · 数据复盘</div></div>
+<div style="font-size:11px;color:var(--accent);cursor:pointer;flex-shrink:0;font-weight:600" onclick="openPayment()">查看教程 →</div>
 </div>
 </div>
-<p style="font-size:11px;color:var(--sub);margin-top:12px;text-align:center" class="guide-footer-pro">前两步免费 · ③~⑥含避坑清单、文案模板、Excel利润表 → <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="openPayment()">PRO ¥9.9/月解锁全部</span></p>
+<p style="font-size:11px;color:var(--sub);margin-top:10px;text-align:center" class="guide-footer-pro">🔒 ③-⑥完整教程含实操步骤+避坑清单+文案模板+定价公式 → <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="openPayment()">PRO ¥9.9 全部解锁</span></p>
 </div>
 
 <!-- Main Calculator -->
@@ -505,18 +494,20 @@ function unlockAll(){
   document.getElementById('proOverlay').style.display='none';
   document.querySelectorAll('.pro-locked').forEach(function(el){el.style.display='none';});
   renderHot();
-  // Show guide details
-  var guideContent=['身份证或营业执照注册Temu卖家账号','用本页热销榜+利润计算器找到高毛利产品','1688搜同款 → 联系客服 → 拿样品 → 确认质量 → 批量下单','用PRO文案模板写标题 · 拍摄白底产品图 · 供货价=成本×3~5','Temu仓地址：广东省肇庆市 · 打印条码贴标 · 物流发货','多SKU策略 · 广告ROI优化 · 旺季提前备货'];
-  document.querySelectorAll('.guide-step').forEach(function(s,i){
-    var badge=s.querySelector('.step-badge');
-    var detail=s.querySelector('.step-detail');
-    if(i<2){if(badge)badge.textContent='✅ 免费';return;}
-    if(badge){badge.textContent='✅ 已解锁';badge.style.color='var(--green)';}
-    if(detail){detail.textContent=guideContent[i];detail.style.display='block';}
-  });
-  document.querySelectorAll('.tool-item .tool-label').forEach(function(t){t.textContent='✅ 已解锁';t.style.color='var(--green)';t.onclick=null;});
-  document.querySelector('.guide-footer-pro').style.display='none';
+  document.querySelectorAll('.guide-footer-pro').forEach(function(el){el.style.display='none';});
   document.getElementById('proExitBtn').style.display='';
+  // Unlock guide rows 3-6
+  var rows=document.querySelectorAll('#guideSteps > div');
+  for(var i=2;i<rows.length;i++){
+    var r=rows[i];
+    var lock=r.querySelector('div[style*="PRO"]');
+    var action=r.querySelector('div[onclick]');
+    if(lock)lock.style.display='none';
+    if(action)action.style.display='none';
+    var circle=r.querySelector('div[style*="50%"]');
+    if(circle){circle.style.background='var(--green)';circle.style.color='#fff';}
+  }
+  document.querySelectorAll('.tool-item .tool-label').forEach(function(t){t.textContent='✅ 已解锁';t.style.color='var(--green)';t.onclick=null;});
 }
 function isPRO(){return localStorage.getItem('zhanc_pro')==='true'}
 
