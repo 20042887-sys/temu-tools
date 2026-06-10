@@ -325,6 +325,7 @@ document.addEventListener('click', function(e){
 function switchHotTab(t){currentHot=t;document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.remove('active'));event.target.classList.add('active');renderHot();}
 
 function addToCompare(name,cost,supply,retail,weight){
+  alert("收到点击！产品="+name+" 成本="+cost+" 售价="+retail);
   var pid = activeProduct;
   var elCost = document.getElementById("cost"+pid);
   if(!elCost){ alert("请先填写产品数据"); return; }
@@ -335,7 +336,7 @@ function addToCompare(name,cost,supply,retail,weight){
   document.getElementById("qty"+pid).value = 200;
   // Update tab label
   var tabs = document.querySelectorAll('#productTabs .tab');
-  if(tabs[pid]){ tabs[pid].textContent = '\u{1F4CA} '+name; tabs[pid].style.color = 'var(--orange)'; }
+  if(tabs[pid]){ tabs[pid].textContent = '📊 '+name; tabs[pid].style.color = 'var(--orange)'; }
   // Calculate
   products[pid].name = name; products[pid].cost = cost; products[pid].supply = supply;
   calcAll();
