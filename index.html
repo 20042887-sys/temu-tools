@@ -312,13 +312,30 @@ ${!r.locked?'<div style="flex-shrink:0;margin-left:6px;cursor:pointer;background
 function switchHotTab(t){currentHot=t;document.querySelectorAll('.tabs .tab').forEach(el=>el.classList.remove('active'));event.target.classList.add('active');renderHot();}
 
 function addToCompare(name,cost,supply,retail,weight){
-  document.getElementById("cost"+activeProduct).value = cost;
-  document.getElementById("supply"+activeProduct).value = supply;
-  document.getElementById("retail"+activeProduct).value = retail;
-  document.getElementById("weight"+activeProduct).value = weight;
-  document.getElementById("qty"+activeProduct).value = 200;
+  var pid = activeProduct;
+  var elCost = document.getElementById("cost"+pid);
+  var elSupply = document.getElementById("supply"+pid);
+  var elRetail = document.getElementById("retail"+pid);
+  var elWeight = document.getElementById("weight"+pid);
+  var elQty = document.getElementById("qty"+pid);
+  if(!elCost){ alert("计算器未加载，请刷新页面"); return; }
+  elCost.value = cost;
+  elSupply.value = supply;
+  elRetail.value = retail;
+  elWeight.value = weight;
+  elQty.value = 200;
+  // Update product name display
+  var nameInputs = document.querySelectorAll('#form'+pid+' input[readonly]');
+  if(nameInputs.length>0){ nameInputs[0].value = name; nameInputs[0].style.color = 'var(--orange)'; }
+  // Highlight the tab
+  document.querySelectorAll('#productTabs .tab')[pid].style.background = 'var(--green)';
+  document.querySelectorAll('#productTabs .tab')[pid].style.color = '#fff';
   calcAll();
-  switchProduct((activeProduct+1)%3);
+  // Flash notification
+  var el = document.getElementById('compareResults');
+  el.style.transition = '0.15s';
+  el.style.border = '2px solid var(--green)';
+  setTimeout(function(){ el.style.border = '1px solid var(--border)'; }, 1500);
 }
 function openPayment(){document.getElementById('payModal').style.display='flex'}
 function closePayment(){document.getElementById('payModal').style.display='none'}
