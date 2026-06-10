@@ -126,29 +126,29 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <div style="font-size:10px;color:var(--sub)">热销榜+利润计算</div>
 <div style="margin-top:6px;font-size:10px;color:var(--accent)">✅ 本页工具</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)">
+<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
 <div style="font-size:20px;margin-bottom:6px">③</div>
 <div style="font-size:12px;font-weight:700;margin-bottom:4px">1688进货</div>
 <div style="font-size:10px;color:var(--sub)">找供应商+拿样品</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)">🔒 PRO教程</div>
+<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)">
+<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
 <div style="font-size:20px;margin-bottom:6px">④</div>
 <div style="font-size:12px;font-weight:700;margin-bottom:4px">上架产品</div>
 <div style="font-size:10px;color:var(--sub)">标题+图片+定价</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)">🔒 PRO教程</div>
+<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)">
+<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
 <div style="font-size:20px;margin-bottom:6px">⑤</div>
 <div style="font-size:12px;font-weight:700;margin-bottom:4px">备货发货</div>
 <div style="font-size:10px;color:var(--sub)">寄Temu仓+贴标</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)">🔒 PRO教程</div>
+<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)">
+<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
 <div style="font-size:20px;margin-bottom:6px">⑥</div>
 <div style="font-size:12px;font-weight:700;margin-bottom:4px">放大运营</div>
 <div style="font-size:10px;color:var(--sub)">多品+广告+优化</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)">🔒 PRO教程</div>
+<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
 </div>
 </div>
 <p style="font-size:11px;color:var(--sub);margin-top:12px;text-align:center">前两步免费 · ③~⑥含避坑清单、文案模板、Excel利润表 → <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="openPayment()">PRO ¥9.9/月解锁全部</span></p>
@@ -198,7 +198,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <div class="tab" onclick="switchHotTab('new')">🆕 新品</div>
 </div>
 <div id="hotList"></div>
-<div class="lock-overlay">🔒 解锁完整TOP20 + 1688货源直链<br>
+<div id="proOverlay" class="lock-overlay">🔒 解锁完整TOP20 + 1688货源直链<br>
 <button class="cta cta-pro" id="proBtn" onclick="openPayment()">🚀 开通 PRO · ¥9.9/月</button></div>
 </div>
 
@@ -256,9 +256,10 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <p style="color:var(--sub);font-size:14px;margin-bottom:4px">¥9.9/月 · 自动续费 · 随时取消</p>
 <p style="color:var(--green);font-size:13px;margin-bottom:16px">✅ 每日热销榜TOP20 · ✅ 1688货源直链 · ✅ AI选品洞察 · ✅ 政策解读</p>
 <div style="background:var(--bg);border-radius:10px;padding:20px;margin-bottom:16px;text-align:center">
-<p style="font-size:13px;color:var(--sub)">微信扫码支付 ¥9.9</p>
-<p style="font-size:18px;font-weight:700;margin:8px 0;color:var(--orange)">支付功能接入中</p>
-<p style="font-size:12px;color:var(--sub)">面包多闪电结算审核中</p>
+<p style="font-size:13px;color:var(--sub);margin-bottom:8px">输入PRO解锁码</p>
+<input id="proCode" type="text" placeholder="输入解锁码" style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:16px;text-align:center;margin-bottom:10px;letter-spacing:2px">
+<button onclick="verifyCode()" style="width:100%;background:linear-gradient(135deg,var(--green),#059669);border:none;color:#fff;padding:10px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600">🔓 激活PRO</button>
+<p style="font-size:10px;color:var(--sub);margin-top:8px">解锁码通过微信支付 ¥9.9 后获取</p>
 </div>
 <button onclick="closePayment()" style="background:var(--border);border:none;color:var(--text);padding:10px 30px;border-radius:8px;cursor:pointer;font-size:14px">稍后再说</button>
 </div>
@@ -380,8 +381,8 @@ const hotData={
     {n:'迷你电动奶泡器',c:'厨房小电器',m:'周涨42%',p:'$8.47',mg:'72%',cost:8,supply:30,retail:8.47,weight:200},
     {n:'可伸缩除尘刷',c:'家居清洁',m:'月销11万+',p:'$5.93',mg:'78%',cost:3.5,supply:18,retail:5.93,weight:150},
     {n:'宠物慢食碗',c:'宠物用品',m:'周涨55%',p:'$7.99',mg:'80%',cost:4,supply:22,retail:7.99,weight:180},
-    {n:'███████████',c:'███',m:'███',p:'$--',mg:'--',locked:true},
-    {n:'███████████',c:'███',m:'███',p:'$--',mg:'--',locked:true},
+    {n:'LED灯带 5米',c:'家居装饰',m:'周涨89%',p:'$12.99',mg:'84%',cost:4,supply:20,retail:12.99,weight:300,locked:true},
+    {n:'不锈钢冰块套装',c:'家居厨房',m:'夏季爆款',p:'$6.99',mg:'88%',cost:2,supply:12,retail:6.99,weight:300,locked:true},
   ],
   profit:[
     {n:'硅胶空气炸锅垫',c:'厨房工具',m:'拿货¥2.6',p:'$2.80',mg:'87%',cost:2.6,supply:12,retail:2.8,weight:80},
@@ -400,20 +401,24 @@ const hotData={
 let currentHot='rising';
 function renderHot(){
   const items=hotData[currentHot];
-  document.getElementById('hotList').innerHTML=items.slice(0,5).map((r,i)=>`
-<div class="hot-item${r.locked?' locked':''}">
+  var pro=isPRO();
+  var count=pro?items.length:5;
+  document.getElementById('hotList').innerHTML=items.slice(0,count).map((r,i)=>{
+    var locked=!pro&&r.locked;
+    return `
+<div class="hot-item${locked?' locked':''}">
 <div class="rank${i<3?' hot':''}">${i+1}</div>
 <div class="info"><div class="name">${r.n}</div><div class="meta">${r.c} · ${r.m}</div></div>
 <div class="margin" style="color:var(--green)">${r.mg||''}</div>
 <div class="price">${r.p}</div>
-${!r.locked
-  ? '<div style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap">+对比</div>'
+${!locked
+  ? '<div class="add-btn" data-name="'+r.n+'" data-cost="'+r.cost+'" data-supply="'+r.supply+'" data-retail="'+r.retail+'" data-weight="'+r.weight+'" style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap">+对比</div>'
   : '<div style="flex-shrink:0;margin-left:6px;font-size:10px;color:var(--sub)">🔒 PRO</div>'}
 </div>
-${!r.locked
+${!locked
   ? '<div style="font-size:10px;color:var(--orange);padding:2px 0 0 34px">💰 1688拿货价 ¥'+r.cost+' | 毛利 '+r.mg+'</div>'
   : '<div style="font-size:10px;color:var(--sub);padding:2px 0 0 34px">🔒 PRO查看1688货源价 + 每日更新</div>'}
-</div>`).join('');
+</div>`;
 }
 
 // Click delegation for +对比 buttons (use document since hotList gets re-rendered)
@@ -476,12 +481,35 @@ function removeSaved(i){
 }
 function openPayment(){document.getElementById('payModal').style.display='flex'}
 function closePayment(){document.getElementById('payModal').style.display='none'}
+function verifyCode(){
+  var code=document.getElementById('proCode').value.trim();
+  var valid=['ZHANC2025','TRIAL7','TEMUPRO'];
+  if(valid.includes(code)){
+    localStorage.setItem('zhanc_pro','true');
+    document.getElementById('payModal').style.display='none';
+    unlockAll();
+    alert('✅ PRO已激活！所有功能已解锁');
+  } else {
+    alert('❌ 解锁码无效，请检查后重试');
+  }
+}
+function unlockAll(){
+  document.getElementById('proOverlay').style.display='none';
+  document.querySelectorAll('.pro-locked').forEach(function(el){el.style.display='none';});
+  document.querySelectorAll('.pro-hidden').forEach(function(el){el.style.display='';});
+  renderHot();
+  document.querySelectorAll('.guide-step .step-badge').forEach(function(s){
+    s.textContent='✅ 已解锁'; s.style.color='var(--green)';
+  });
+}
+function isPRO(){return localStorage.getItem('zhanc_pro')==='true'}
 
 // Init
 renderForms();
 renderHot();
 renderSaved();
 calcAll();
+if(isPRO()){unlockAll();}
 
 // Auto-update stats
 setTimeout(()=>{document.getElementById('todayUsers').textContent='387';},2000);
