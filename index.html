@@ -214,9 +214,11 @@ function calcOne(i){
   const qty=parseInt(document.getElementById('qty'+i)?.value)||products[i].qty;
   const weight=parseFloat(document.getElementById('weight'+i)?.value)||products[i].weight;
   const ret=parseFloat(document.getElementById('ret'+i)?.value)||products[i].ret;
-  const ship=Math.max(1,Math.ceil(weight/500)*3);
+  const totalWeight=weight*qty;
+  const packages=Math.max(1,Math.ceil(totalWeight/3000));
+  const totalShip=packages*5;
+  const ship=totalShip/qty;
   const totalCost=cost*qty;
-  const totalShip=ship*qty;
   const revenue=supply*qty*(1-ret/100);
   const gross=revenue-totalCost-totalShip;
   const perUnit=gross/qty;
