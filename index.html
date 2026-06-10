@@ -191,6 +191,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
 <h2 style="margin:0;font-size:15px"><span class="icon">⭐</span> 我的选品库</h2>
 <span style="font-size:11px;color:var(--sub)">点击热销榜"+对比"自动收藏 · 数据保存在浏览器</span>
+<span id="proExitBtn" style="display:none;font-size:11px;color:var(--red);cursor:pointer" onclick="localStorage.removeItem('zhanc_pro');location.reload()">退出PRO</span>
 </div>
 <div id="savedList" style="min-height:32px"></div>
 </div>
@@ -515,6 +516,7 @@ function unlockAll(){
   });
   document.querySelectorAll('.tool-item .tool-label').forEach(function(t){t.textContent='✅ 已解锁';t.style.color='var(--green)';t.onclick=null;});
   document.querySelector('.guide-footer-pro').style.display='none';
+  document.getElementById('proExitBtn').style.display='';
 }
 function isPRO(){return localStorage.getItem('zhanc_pro')==='true'}
 
