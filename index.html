@@ -113,42 +113,48 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <h2 style="margin:0;font-size:15px"><span class="icon">🎓</span> Temu小白开店指南</h2>
 <span style="font-size:11px;color:var(--sub)">从零到出单，一步步跟着做</span>
 </div>
-<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;text-align:center">
+<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;text-align:center" id="guideSteps">
 <div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)">
 <div style="font-size:20px;margin-bottom:6px">①</div>
 <div style="font-size:12px;font-weight:700;margin-bottom:4px">注册店铺</div>
 <div style="font-size:10px;color:var(--sub)">身份证/营业执照</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)">✅ 免费</div>
+<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">✅ 免费</div>
+<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)">
+<div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
 <div style="font-size:20px;margin-bottom:6px">②</div>
 <div style="font-size:12px;font-weight:700;margin-bottom:4px">选品调研</div>
 <div style="font-size:10px;color:var(--sub)">热销榜+利润计算</div>
-<div style="margin-top:6px;font-size:10px;color:var(--accent)">✅ 本页工具</div>
+<div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">✅ 本页工具</div>
+<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
 </div>
 <div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
 <div style="font-size:20px;margin-bottom:6px">③</div>
 <div style="font-size:12px;font-weight:700;margin-bottom:4px">1688进货</div>
 <div style="font-size:10px;color:var(--sub)">找供应商+拿样品</div>
 <div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
+<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
 </div>
 <div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
 <div style="font-size:20px;margin-bottom:6px">④</div>
 <div style="font-size:12px;font-weight:700;margin-bottom:4px">上架产品</div>
 <div style="font-size:10px;color:var(--sub)">标题+图片+定价</div>
 <div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
+<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
 </div>
 <div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
 <div style="font-size:20px;margin-bottom:6px">⑤</div>
 <div style="font-size:12px;font-weight:700;margin-bottom:4px">备货发货</div>
 <div style="font-size:10px;color:var(--sub)">寄Temu仓+贴标</div>
 <div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
+<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
 </div>
 <div style="background:var(--bg);border-radius:10px;padding:12px 8px;border:1px solid var(--border)" class="guide-step">
 <div style="font-size:20px;margin-bottom:6px">⑥</div>
 <div style="font-size:12px;font-weight:700;margin-bottom:4px">放大运营</div>
 <div style="font-size:10px;color:var(--sub)">多品+广告+优化</div>
 <div style="margin-top:6px;font-size:10px;color:var(--accent)" class="step-badge">🔒 PRO教程</div>
+<div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
 </div>
 </div>
 <p style="font-size:11px;color:var(--sub);margin-top:12px;text-align:center">前两步免费 · ③~⑥含避坑清单、文案模板、Excel利润表 → <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="openPayment()">PRO ¥9.9/月解锁全部</span></p>
@@ -218,29 +224,29 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <div class="card" style="margin-top:20px">
 <h2><span class="icon">🧰</span> Temu卖家工具箱</h2>
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
-<div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border)">
+<div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border)" class="tool-item">
 <div style="font-size:24px;margin-bottom:6px">🌐</div>
 <div style="font-size:13px;font-weight:600;margin-bottom:4px">跨境网络直通</div>
 <div style="font-size:11px;color:var(--sub)">稳定访问海外电商平台</div>
-<div style="margin-top:8px;font-size:11px;color:var(--accent);cursor:pointer" onclick="openPayment()">🔒 PRO查看配置</div>
+<div style="margin-top:8px;font-size:11px;color:var(--accent);cursor:pointer" class="tool-label" onclick="openPayment()">🔒 PRO查看配置</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border)">
+<div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border)" class="tool-item">
 <div style="font-size:24px;margin-bottom:6px">🖼️</div>
 <div style="font-size:13px;font-weight:600;margin-bottom:4px">图片翻译</div>
 <div style="font-size:11px;color:var(--sub)">中文商品图一键译成英文</div>
-<div style="margin-top:8px;font-size:11px;color:var(--accent);cursor:pointer" onclick="openPayment()">🔒 PRO查看工具</div>
+<div style="margin-top:8px;font-size:11px;color:var(--accent);cursor:pointer" class="tool-label" onclick="openPayment()">🔒 PRO查看工具</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border)">
+<div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border)" class="tool-item">
 <div style="font-size:24px;margin-bottom:6px">💱</div>
 <div style="font-size:13px;font-weight:600;margin-bottom:4px">实时汇率计算</div>
 <div style="font-size:11px;color:var(--sub)">美元/欧元实时转人民币</div>
-<div style="margin-top:8px;font-size:11px;color:var(--green)">💡 $1 = ¥7.25</div>
+<div style="margin-top:8px;font-size:11px;color:var(--green)" class="tool-label">💡 $1 = ¥7.25</div>
 </div>
-<div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border)">
+<div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border)" class="tool-item">
 <div style="font-size:24px;margin-bottom:6px">📦</div>
 <div style="font-size:13px;font-weight:600;margin-bottom:4px">物流查询</div>
 <div style="font-size:11px;color:var(--sub)">Temu收件仓地址与物流追踪</div>
-<div style="margin-top:8px;font-size:11px;color:var(--accent);cursor:pointer" onclick="openPayment()">🔒 PRO查看详情</div>
+<div style="margin-top:8px;font-size:11px;color:var(--accent);cursor:pointer" class="tool-label" onclick="openPayment()">🔒 PRO查看详情</div>
 </div>
 </div>
 <p style="font-size:11px;color:var(--sub);margin-top:12px;text-align:center">🔒 完整工具箱（含加速器配置教程、1688自动翻译插件、物流对账模板）→ <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="openPayment()">PRO会员专享</span></p>
@@ -499,8 +505,21 @@ function unlockAll(){
   document.querySelectorAll('.pro-locked').forEach(function(el){el.style.display='none';});
   document.querySelectorAll('.pro-hidden').forEach(function(el){el.style.display='';});
   renderHot();
-  document.querySelectorAll('.guide-step .step-badge').forEach(function(s){
-    s.textContent='✅ 已解锁'; s.style.color='var(--green)';
+  // Guide steps
+  var guideContent=['已解锁','已解锁','1688搜索同款→联系客服→拿样→确版→批量下单','文案模板+产品图拍摄技巧+定价公式','Temu仓地址：广东省肇庆市+贴标教程','多SKU策略+广告ROI优化+淡旺季备货'];
+  document.querySelectorAll('#guideSteps .guide-step').forEach(function(s,i){
+    var badge=s.querySelector('.step-badge');
+    var detail=s.querySelector('.step-detail');
+    if(badge)badge.textContent='✅ 已解锁';
+    if(badge)badge.style.color='var(--green)';
+    if(detail)detail.textContent=guideContent[i]||'';
+    if(detail)detail.style.display='';
+  });
+  // Toolbox
+  document.querySelectorAll('.tool-item').forEach(function(t){
+    var label=t.querySelector('.tool-label');
+    if(label)label.textContent='✅ 已解锁';
+    if(label)label.style.color='var(--green)';
   });
 }
 function isPRO(){return localStorage.getItem('zhanc_pro')==='true'}
