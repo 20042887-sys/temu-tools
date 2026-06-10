@@ -157,7 +157,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <div style="font-size:9px;color:var(--sub);margin-top:4px;display:none" class="step-detail"></div>
 </div>
 </div>
-<p style="font-size:11px;color:var(--sub);margin-top:12px;text-align:center">前两步免费 · ③~⑥含避坑清单、文案模板、Excel利润表 → <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="openPayment()">PRO ¥9.9/月解锁全部</span></p>
+<p style="font-size:11px;color:var(--sub);margin-top:12px;text-align:center" class="guide-footer-pro">前两步免费 · ③~⑥含避坑清单、文案模板、Excel利润表 → <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="openPayment()">PRO ¥9.9/月解锁全部</span></p>
 </div>
 
 <!-- Main Calculator -->
@@ -503,24 +503,18 @@ function verifyCode(){
 function unlockAll(){
   document.getElementById('proOverlay').style.display='none';
   document.querySelectorAll('.pro-locked').forEach(function(el){el.style.display='none';});
-  document.querySelectorAll('.pro-hidden').forEach(function(el){el.style.display='';});
   renderHot();
-  // Guide steps
-  var guideContent=['已解锁','已解锁','1688搜索同款→联系客服→拿样→确版→批量下单','文案模板+产品图拍摄技巧+定价公式','Temu仓地址：广东省肇庆市+贴标教程','多SKU策略+广告ROI优化+淡旺季备货'];
-  document.querySelectorAll('#guideSteps .guide-step').forEach(function(s,i){
+  // Show guide details
+  var guideContent=['身份证或营业执照注册Temu卖家账号','用本页热销榜+利润计算器找到高毛利产品','1688搜同款 → 联系客服 → 拿样品 → 确认质量 → 批量下单','用PRO文案模板写标题 · 拍摄白底产品图 · 供货价=成本×3~5','Temu仓地址：广东省肇庆市 · 打印条码贴标 · 物流发货','多SKU策略 · 广告ROI优化 · 旺季提前备货'];
+  document.querySelectorAll('.guide-step').forEach(function(s,i){
     var badge=s.querySelector('.step-badge');
     var detail=s.querySelector('.step-detail');
-    if(badge)badge.textContent='✅ 已解锁';
-    if(badge)badge.style.color='var(--green)';
-    if(detail)detail.textContent=guideContent[i]||'';
-    if(detail)detail.style.display='';
+    if(i<2){if(badge)badge.textContent='✅ 免费';return;}
+    if(badge){badge.textContent='✅ 已解锁';badge.style.color='var(--green)';}
+    if(detail){detail.textContent=guideContent[i];detail.style.display='block';}
   });
-  // Toolbox
-  document.querySelectorAll('.tool-item').forEach(function(t){
-    var label=t.querySelector('.tool-label');
-    if(label)label.textContent='✅ 已解锁';
-    if(label)label.style.color='var(--green)';
-  });
+  document.querySelectorAll('.tool-item .tool-label').forEach(function(t){t.textContent='✅ 已解锁';t.style.color='var(--green)';t.onclick=null;});
+  document.querySelector('.guide-footer-pro').style.display='none';
 }
 function isPRO(){return localStorage.getItem('zhanc_pro')==='true'}
 
