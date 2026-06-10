@@ -316,7 +316,13 @@ function renderHot(){
 <div class="info"><div class="name">${r.n}</div><div class="meta">${r.c} · ${r.m}</div></div>
 <div class="margin" style="color:var(--green)">${r.mg||''}</div>
 <div class="price">${r.p}</div>
-${r.locked ? '' : '<div class="add-btn" data-name="'+r.n+'" data-cost="'+r.cost+'" data-supply="'+r.supply+'" data-retail="'+r.retail+'" data-weight="'+r.weight+'" style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap">+对比</div>'}
+${!r.locked
+  ? '<div style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap">+对比</div>'
+  : '<div style="flex-shrink:0;margin-left:6px;font-size:10px;color:var(--sub)">🔒 PRO</div>'}
+</div>
+${!r.locked
+  ? '<div style="font-size:10px;color:var(--orange);padding:2px 0 0 34px">💰 1688拿货价 ¥'+r.cost+' | 毛利 '+r.mg+'</div>'
+  : '<div style="font-size:10px;color:var(--sub);padding:2px 0 0 34px">🔒 PRO查看1688货源价 + 每日更新</div>'}
 </div>`).join('');
 }
 
