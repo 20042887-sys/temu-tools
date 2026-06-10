@@ -538,8 +538,8 @@ function unlockAll(){
     var lock=r.querySelector('div[style*="PRO"]');if(lock)lock.style.display='none';
     var action=r.querySelector('div[onclick]');if(action)action.style.display='none';
     var circle=r.querySelector('div[style*="50%"]');if(circle&&i>=2){circle.style.background='var(--green)';circle.style.color='#fff';}
-    var detail=r.querySelector('.guide-content');if(detail&&i>=2)detail.style.display='';
-    if(i>=2){r.style.cursor='pointer';r.onclick=function(){var d=this.querySelector('.guide-content');if(d)d.style.display=d.style.display==='none'?'':'none';};}
+    var detail=r.nextElementSibling;if(detail&&detail.classList.contains('guide-content')&&i>=2)detail.style.display='';
+    if(i>=2){r.style.cursor='pointer';r.onclick=function(){var d=this.nextElementSibling;if(d&&d.classList.contains('guide-content'))d.style.display=d.style.display==='none'?'':'none';};}
   }
   document.querySelectorAll('.tool-item .tool-label').forEach(function(t){t.textContent='✅ 已解锁';t.style.color='var(--green)';t.onclick=null;});
 }
