@@ -255,12 +255,20 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <div style="font-size:13px;font-weight:600;margin-bottom:4px">跨境网络直通</div>
 <div style="font-size:11px;color:var(--sub)">稳定访问海外电商平台</div>
 <div style="margin-top:8px;font-size:11px;color:var(--accent);cursor:pointer" class="tool-label" onclick="openPayment()">🔒 PRO查看配置</div>
+<div class="tool-detail" style="display:none;font-size:10px;color:var(--sub);margin-top:6px;line-height:1.6">
+✅ 推荐使用企业级跨境专线：快帆/Transocks<br>
+✅ 免费方案：Edge浏览器+插件模式
+</div>
 </div>
 <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border)" class="tool-item">
 <div style="font-size:24px;margin-bottom:6px">🖼️</div>
 <div style="font-size:13px;font-weight:600;margin-bottom:4px">图片翻译</div>
 <div style="font-size:11px;color:var(--sub)">中文商品图一键译成英文</div>
 <div style="margin-top:8px;font-size:11px;color:var(--accent);cursor:pointer" class="tool-label" onclick="openPayment()">🔒 PRO查看工具</div>
+<div class="tool-detail" style="display:none;font-size:10px;color:var(--sub);margin-top:6px;line-height:1.6">
+✅ 推荐：Remove.bg 去背景 → DeepL 翻译 → Canva 排版<br>
+✅ 一键翻译商品描述：Google Translate 图片模式
+</div>
 </div>
 <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border)" class="tool-item">
 <div style="font-size:24px;margin-bottom:6px">💱</div>
@@ -273,6 +281,10 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <div style="font-size:13px;font-weight:600;margin-bottom:4px">物流查询</div>
 <div style="font-size:11px;color:var(--sub)">Temu收件仓地址与物流追踪</div>
 <div style="margin-top:8px;font-size:11px;color:var(--accent);cursor:pointer" class="tool-label" onclick="openPayment()">🔒 PRO查看详情</div>
+<div class="tool-detail" style="display:none;font-size:10px;color:var(--sub);margin-top:6px;line-height:1.6">
+📦 Temu广州仓：广东省广州市南沙区龙穴岛保税港区<br>
+📦 发货教程：卖家中心→备货管理→发货台
+</div>
 </div>
 </div>
 <p style="font-size:11px;color:var(--sub);margin-top:12px;text-align:center">🔒 完整工具箱（含加速器配置教程、1688自动翻译插件、物流对账模板）→ <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="openPayment()">PRO会员专享</span></p>
@@ -543,6 +555,7 @@ function unlockAll(){
     if(i>=2){r.style.cursor='pointer';r.onclick=function(){var d=this.nextElementSibling;if(d&&d.classList.contains('guide-content'))d.style.display=d.style.display==='none'?'':'none';};}
   }
   document.querySelectorAll('.tool-item .tool-label').forEach(function(t){t.textContent='✅ 已解锁';t.style.color='var(--green)';t.onclick=null;});
+  document.querySelectorAll('.tool-detail').forEach(function(d){d.style.display='block';});
 }
 function isPRO(){return localStorage.getItem('zhanc_pro')==='true'}
 
