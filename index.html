@@ -194,8 +194,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 <div class="tab" onclick="switchHotTab('new')">🆕 新品</div>
 </div>
 <div id="hotList"></div>
-<div id="proOverlay" class="lock-overlay">🔒 解锁完整TOP20 + 1688货源直链<br>
-<button class="cta cta-pro" id="proBtn" onclick="openPayment()">🚀 开通 PRO · ¥9.9/月</button></div>
+<p id="proOverlay" style="text-align:center;font-size:12px;color:var(--sub);margin-top:10px">🔒 上方热门品的1688货源价已隐藏 · <span style="color:var(--accent);cursor:pointer;font-weight:600" onclick="openPayment()">PRO ¥9.9 解锁全部</span></p>
 </div>
 
 <div class="card">
@@ -433,24 +432,24 @@ const hotData={
 
 let currentHot='rising';
 function renderHot(){
-  const items=hotData[currentHot];
+  var items=hotData[currentHot];
   var pro=isPRO();
-  var count=pro?items.length:5;
-  document.getElementById('hotList').innerHTML=items.slice(0,count).map((r,i)=>{
-    var locked=!pro&&r.locked;
+  var threshold=pro?0:Math.ceil(items.length/2); // top half locked for free users
+  document.getElementById('hotList').innerHTML=items.map((r,i)=>{
+    var locked=!pro&&(r.locked||i<threshold);
     return `
 <div class="hot-item${locked?' locked':''}">
 <div class="rank${i<3?' hot':''}">${i+1}</div>
-<div class="info"><div class="name">${r.n}</div><div class="meta">${r.c} · ${r.m}</div></div>
-<div class="margin" style="color:var(--green)">${r.mg||''}</div>
-<div class="price">${r.p}</div>
-${!locked
-  ? '<div class="add-btn" data-name="'+r.n+'" data-cost="'+r.cost+'" data-supply="'+r.supply+'" data-retail="'+r.retail+'" data-weight="'+r.weight+'" style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap">+对比</div>'
-  : '<div style="flex-shrink:0;margin-left:6px;font-size:10px;color:var(--sub)">🔒 PRO</div>'}
+<div class="info"><div class="name">${locked?r.n.replace(/./g,'█').replace(/^█+/,'🔥 热门').substring(0,10)+'...':r.n}</div><div class="meta">${locked?'TOP热销品':r.c+' · '+r.m}</div></div>
+<div class="margin" style="color:${locked?'var(--sub)':'var(--green)'}">${locked?'🔒':r.mg||''}</div>
+<div class="price">${locked?'$?.??':r.p}</div>
+${locked
+  ? '<div style="flex-shrink:0;margin-left:6px;font-size:10px;color:var(--sub)">🔒 PRO</div>'
+  : '<div class="add-btn" data-name="'+r.n+'" data-cost="'+r.cost+'" data-supply="'+r.supply+'" data-retail="'+r.retail+'" data-weight="'+r.weight+'" style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap">+对比</div>'}
 </div>
-${!locked
-  ? '<div style="font-size:10px;color:var(--orange);padding:2px 0 0 34px">💰 1688拿货价 ¥'+r.cost+' | 毛利 '+r.mg+'</div>'
-  : '<div style="font-size:10px;color:var(--sub);padding:2px 0 0 34px">🔒 PRO查看1688货源价 + 每日更新</div>'}
+${locked
+  ? '<div style="font-size:10px;color:var(--sub);padding:2px 0 0 34px">🔒 PRO查看1688货源价 + 销量数据</div>'
+  : '<div style="font-size:10px;color:var(--orange);padding:2px 0 0 34px">💰 1688拿货价 ¥'+r.cost+' | 毛利 '+r.mg+'</div>'}
 </div>`;
   }).join('');
 }
