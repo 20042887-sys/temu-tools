@@ -345,6 +345,7 @@ function calcOne(i){
   const qty=parseInt(document.getElementById('qty'+i)?.value)||products[i].qty;
   const weight=parseFloat(document.getElementById('weight'+i)?.value)||products[i].weight;
   const ret=parseFloat(document.getElementById('ret'+i)?.value)||products[i].ret;
+  if(!supply||!qty){return {name:products[i].name,cost:0,supply:0,retail:0,qty:0,weight:0,ship:0,totalCost:0,totalShip:0,revenue:0,gross:0,perUnit:0,margin:0,monthly:0,breakeven:0,ret:0};}
   const totalWeight=weight*qty;
   const packages=Math.max(1,Math.ceil(totalWeight/3000));
   const totalShip=packages*5;
@@ -440,7 +441,7 @@ function renderHot(){
     return `
 <div class="hot-item${locked?' locked':''}">
 <div class="rank${i<3?' hot':''}">${i+1}</div>
-<div class="info"><div class="name">${r.n}</div><div class="meta">${r.c} · ${r.m}</div></div>
+<div class="info"><div class="name">${r.n}</div><div class="meta">${locked?'TOP热销品 · 数据已隐藏':r.c+' · '+r.m}</div></div>
 <div class="margin" style="color:${locked?'var(--sub)':'var(--green)'}">${locked?'—':r.mg||''}</div>
 <div class="price">${locked?'—':r.p}</div>
 ${locked
