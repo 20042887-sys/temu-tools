@@ -563,17 +563,24 @@ function removeSaved(i){
 }
 function openPayment(){window.open('https://mbd.pub/o/bread/YZaTmJhpaw==','_blank')}
 function closePayment(){document.getElementById('payModal').style.display='none'}
-function verifyCode(){
+async function verifyCode(){
   var code=document.getElementById('proCode').value.trim();
-  var valid=['ZHANC2025','TRIAL7','TEMUPRO'];
-  if(valid.includes(code)){
+  if(!code){alert('请输入激活码');return;}
+  try{
+    var r=await fetch('https://temu-tools-nine.vercel.app/api/pro?code='+encodeURIComponent(code));
+    var d=await r.json();
+    if(!d.ok){alert('❌ '+d.msg);return;}
     localStorage.setItem('zhanc_pro','true');
+    localStorage.setItem('zhanc_code',code);
+    localStorage.setItem('zhanc_expire',d.expireAt);
     document.getElementById('payModal').style.display='none';
     unlockAll();
-    alert('✅ PRO已激活！所有功能已解锁');
-  } else {
-    alert('❌ 解锁码无效，请检查后重试');
-  }
+    alert('✅ 激活成功！到期 '+new Date(d.expireAt).toLocaleDateString()+'（剩余'+d.daysLeft+'天）');
+  }catch(e){alert('网络错误，请重试');}
+}
+function checkExpired(){
+  var exp=parseInt(localStorage.getItem('zhanc_expire')||'0');
+  if(exp&&Date.now()>exp){localStorage.removeItem('zhanc_pro');localStorage.removeItem('zhanc_expire');location.reload();}
 }
 function unlockAll(){
   document.getElementById('proOverlay').style.display='none';
@@ -610,7 +617,9 @@ renderForms();
 renderHot();
 renderSaved();
 calcAll();
+checkExpired();
 if(isPRO()){unlockAll();}
+setInterval(checkExpired,60000); // 每分钟检查是否过期
 
 
 // Auto-update stats
