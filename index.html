@@ -83,7 +83,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 
 <div class="header">
 <div class="logo">📊 Temu<span>选品情报站</span> <span style="font-size:11px;background:var(--accent);padding:2px 8px;border-radius:10px;margin-left:8px">PRO</span></div>
-<div class="status"><span class="dot"></span>数据更新 · <span id="today">2026-06-11</span></div>
+<div class="status"><span class="dot"></span>数据更新 · <span id="today">2026-06-11</span> · 👁 <span id="pvCount">...</span> 次浏览</div>
 </div>
 
 <div class="container">
@@ -602,6 +602,11 @@ renderHot();
 renderSaved();
 calcAll();
 if(isPRO()){unlockAll();}
+// Page view counter
+var pv=parseInt(localStorage.getItem('zhanc_pv')||'0')+1;
+localStorage.setItem('zhanc_pv',pv);
+document.getElementById('pvCount').textContent=pv;
+
 
 // Auto-update stats
 setTimeout(()=>{document.getElementById('todayUsers').textContent='387';},2000);
