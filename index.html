@@ -354,7 +354,7 @@ function renderForms(){
     h+=`<div id="form${i}" style="${d}">
 <div class="form-row">
 <div class="form-group"><label>产品名称</label><input value="${p.name}" readonly style="color:var(--green)"></div>
-<div class="form-group"><label>Temu预估售价（$）</label><input type="number" id="retail${i}" value="${p.retail}" step="0.01"></div>
+<div class="form-group"><label>Temu预估售价（$） <span style="font-size:9px;color:var(--sub)">仅供参考，利润按供货价算</span></label><input type="number" id="retail${i}" value="${p.retail}" step="0.01"></div>
 </div>
 <div class="form-row">
 <div class="form-group"><label>1688拿货价（¥）</label><input type="number" id="cost${i}" value="${p.cost}" step="0.01"></div>
@@ -439,7 +439,7 @@ function calcAll(){
 </div>
 <h2 style="font-size:15px;margin-bottom:10px"><span class="icon">📊</span> 利润构成拆解</h2>
 ${results.map(r=>{
-  const costs=[{label:'拿货成本',val:r.totalCost,color:'r'},{label:'物流运费',val:r.totalShip,color:'o'},{label:'退货损耗',val:r.revenue>0?(r.supply*r.qty*(r.ret||products[0].ret)/100):0,color:'r'},{label:'净利润',val:Math.max(0,r.gross),color:'g'}];
+  const costs=[{label:'拿货成本',val:r.totalCost,color:'r'},{label:'物流运费',val:r.totalShip,color:'o'},{label:'退货损耗',val:r.revenue>0?(r.supply*r.qty*(r.ret)/100):0,color:'r'},{label:'净利润',val:Math.max(0,r.gross),color:'g'}];
   const max=Math.max(...costs.map(c=>c.val),1);
   return `<div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;margin-bottom:4px">${r.name}</div>`+costs.map(c=>`<div class="chart-bar"><div class="label">${c.label}</div><div class="bar-track"><div class="bar-fill ${c.color}" style="width:${(c.val/max*100).toFixed(1)}%">¥${c.val.toFixed(0)}</div></div></div>`).join('')+'</div>';
 }).join('')}`;
