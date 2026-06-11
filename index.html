@@ -580,6 +580,16 @@ function unlockAll(){
   }
   document.querySelectorAll('.tool-item .tool-label').forEach(function(t){t.textContent='✅ 已解锁';t.style.color='var(--green)';t.onclick=null;});
   document.querySelectorAll('.tool-detail').forEach(function(d){d.style.display='block';});
+  // Unlock AI insights - replace locked content
+  var insights=document.querySelectorAll('.insight.locked');
+  var insightData=[
+    '<span>✅</span><div><strong>11月黑五提前备货清单：</strong>黑五网一（11月底）→ 3C配件+玩具礼品，流量激增50%。圣诞新年（12月）→ 节日装饰+礼品套装，客单价提升20%。提前45天备货入仓。备货量建议为日常的2-3倍。</div>',
+    '<span>✅</span><div><strong>1688供应商评级：</strong>高评分供应商：深圳和联方科技（9年·99.9%好评·3C配件）、汕头爱博莉化妆品（11年·美妆专精）、义乌璇祈电子商务（烘焙工具·赛维品牌）。建议优先选择"实力商家"+"深度验厂"双认证供应商。</div>',
+    '<span>✅</span><div><strong>Temu最新合规要求：</strong>① 欧洲站要求EPR环保认证（¥300-400/年）；② 美妆个护类需FDA认证；③ 3C类需FCC认证；④ 平台严查虚假宣传和图片侵权。建议上架前先查合规要求，避免被强制下架。</div>'
+  ];
+  insights.forEach(function(el,i){
+    if(insightData[i]){el.outerHTML='<div class="insight good">'+insightData[i]+'</div>';}
+  });
 }
 function isPRO(){return localStorage.getItem('zhanc_pro')==='true'}
 
