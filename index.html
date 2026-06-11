@@ -440,9 +440,9 @@ function renderHot(){
     return `
 <div class="hot-item${locked?' locked':''}">
 <div class="rank${i<3?' hot':''}">${i+1}</div>
-<div class="info"><div class="name">${locked?r.n.replace(/./g,'█').replace(/^█+/,'🔥 热门').substring(0,10)+'...':r.n}</div><div class="meta">${locked?'TOP热销品':r.c+' · '+r.m}</div></div>
-<div class="margin" style="color:${locked?'var(--sub)':'var(--green)'}">${locked?'🔒':r.mg||''}</div>
-<div class="price">${locked?'$?.??':r.p}</div>
+<div class="info"><div class="name">${r.n}</div><div class="meta">${r.c} · ${r.m}</div></div>
+<div class="margin" style="color:${locked?'var(--sub)':'var(--green)'}">${locked?'—':r.mg||''}</div>
+<div class="price">${locked?'—':r.p}</div>
 ${locked
   ? '<div style="flex-shrink:0;margin-left:6px;font-size:10px;color:var(--sub)">🔒 PRO</div>'
   : '<div class="add-btn" data-name="'+r.n+'" data-cost="'+r.cost+'" data-supply="'+r.supply+'" data-retail="'+r.retail+'" data-weight="'+r.weight+'" style="flex-shrink:0;margin-left:6px;cursor:pointer;background:var(--accent);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap">+对比</div>'}
