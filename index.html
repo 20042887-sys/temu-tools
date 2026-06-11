@@ -561,7 +561,7 @@ function removeSaved(i){
   localStorage.setItem('zhanc_library',JSON.stringify(lib));
   renderSaved();
 }
-function openPayment(){document.getElementById('payModal').style.display='flex'}
+function openPayment(){window.open('https://mbd.pub/o/bread/YZaTmJhpaw==','_blank')}
 function closePayment(){document.getElementById('payModal').style.display='none'}
 function verifyCode(){
   var code=document.getElementById('proCode').value.trim();
